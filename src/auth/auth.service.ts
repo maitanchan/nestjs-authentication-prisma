@@ -55,7 +55,9 @@ export class AuthService {
         const user = await this.prisma.user.findUnique({ where: { email: registerDto.email } })
 
         if (user) {
+
             throw new ConflictException('Email already exist')
+
         }
 
         const hashPassword = await bcrypt.hash(registerDto.hash, 10)
@@ -75,13 +77,17 @@ export class AuthService {
         const user = await this.prisma.user.findUnique({ where: { email: loginDto.email } })
 
         if (!user) {
+
             throw new NotFoundException('Email has been wrong')
+
         }
 
         const comparePassword = await bcrypt.compare(loginDto.hash, user.hash)
 
         if (!comparePassword) {
+
             throw new HttpException('Password has been wrong', HttpStatus.UNAUTHORIZED)
+
         }
 
         const tokens = await this.signTokens(user.id, user.email)
@@ -105,13 +111,17 @@ export class AuthService {
         const user = await this.prisma.user.findUnique({ where: { id: userId } })
 
         if (!user || !user.hashRt) {
+
             throw new HttpException('Access Denied', HttpStatus.FORBIDDEN)
+
         }
 
         const compareHashRefreshToken = await bcrypt.compare(refreshToken, user.hashRt)
 
         if (!compareHashRefreshToken) {
+
             throw new HttpException('Access Denied', HttpStatus.FORBIDDEN)
+
         }
 
         const tokens = await this.signTokens(user.id, user.email)

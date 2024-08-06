@@ -12,6 +12,7 @@ import { AccessTokenGuard } from './auth/guard/access-token.guard';
     ConfigModule.forRoot({
 
       isGlobal: true,
+
       envFilePath: '.env'
 
     }),

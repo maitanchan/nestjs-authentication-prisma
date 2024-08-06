@@ -14,22 +14,27 @@ import { RefreshTokenStrategy } from './strategy/refresh-token.strategy';
     PassportModule,
 
     ConfigModule.forRoot({
+
       isGlobal: true,
+
       envFilePath: '.env'
+
     }),
 
     JwtModule.register({})
 
   ],
 
-  controllers: [
-    AuthController
-  ],
+  controllers: [AuthController],
 
   providers: [
+
     AuthService,
+
     AccessTokenStrategy,
+
     RefreshTokenStrategy
+
   ]
 
 })
